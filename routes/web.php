@@ -45,4 +45,3 @@ Route::delete('/task/{task}', function (Task $task) {
 
     return redirect('/');
 });
-
