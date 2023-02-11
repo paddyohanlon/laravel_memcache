@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,9 @@ use Illuminate\Http\Request;
 
 // Show Tasks
 Route::get('/', function () {
-    $tasks = Task::orderBy('created_at', 'asc')->get();
+    $tasks = Cache::rememberForever('all_tasks', function () {
+        return Task::orderBy('created_at', 'asc')->get();
+    });
 
     return view('tasks', [
         'tasks' => $tasks
