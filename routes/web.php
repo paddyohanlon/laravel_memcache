@@ -39,12 +39,16 @@ Route::post('/task', function (Request $request) {
     $task->name = $request->name;
     $task->save();
 
+    Cache::forget('all_tasks');
+
     return redirect('/');
 });
 
 // Delete Task
 Route::delete('/task/{task}', function (Task $task) {
     $task->delete();
+
+    Cache::forget('all_tasks');
 
     return redirect('/');
 });
