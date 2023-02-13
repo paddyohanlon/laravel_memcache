@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\Cache;
 
 // Show Tasks
 Route::get('/', function () {
-    $tasks = Cache::rememberForever('all_tasks', function () {
-        return Task::orderBy('created_at', 'asc')->get();
-    });
+    // $tasks = Cache::rememberForever('all_tasks', function () {
+    //     return Task::orderBy('created_at', 'asc')->get();
+    // });
+
+    $tasks = Task::orderBy('created_at', 'asc')->get();
 
     return view('tasks', [
         'tasks' => $tasks
@@ -39,7 +41,7 @@ Route::post('/task', function (Request $request) {
     $task->name = $request->name;
     $task->save();
 
-    Cache::forget('all_tasks');
+    // Cache::forget('all_tasks');
 
     return redirect('/');
 });
@@ -48,7 +50,7 @@ Route::post('/task', function (Request $request) {
 Route::delete('/task/{task}', function (Task $task) {
     $task->delete();
 
-    Cache::forget('all_tasks');
+    // Cache::forget('all_tasks');
 
     return redirect('/');
 });
