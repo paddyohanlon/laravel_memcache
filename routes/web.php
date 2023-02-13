@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Task;
 use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Cache;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::post('/task', function (Request $request) {
     $task->save();
 
     // Cache::forget('all_tasks');
+    ResponseCache::forget('/');
 
     return redirect('/');
 });
@@ -51,6 +53,7 @@ Route::delete('/task/{task}', function (Task $task) {
     $task->delete();
 
     // Cache::forget('all_tasks');
+    ResponseCache::forget('/');
 
     return redirect('/');
 });
